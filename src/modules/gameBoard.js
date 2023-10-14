@@ -78,7 +78,7 @@ class GameBoard {
 
     }
 
-    isShipsSunk(){
+    isAllShipsSunk(){
         this.ships.forEach(ship => {
             if(!ship.isSunk()){
                 return false;
