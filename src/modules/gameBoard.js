@@ -1,4 +1,5 @@
 import { Ship } from "./ship.js";
+import { cell } from "./cell.js";
 
 class GameBoard {
     constructor(){
@@ -38,9 +39,9 @@ class GameBoard {
         const [startingPoint, endingPoint] = this.getStartEndPoints(length, cord, isHorizontal);
         
         if(!emptyCells(startingPoint, endingPoint)) return false;
+
         const newShip = Ship(length);
         this.ships.push(newShip);
-
         
         if(isHorizontal){
             const rowIdx = startingPoint[0];
@@ -87,8 +88,11 @@ class GameBoard {
         return true;
     }
 
+    isOccupiedCell(cord){
+        return this.board[cord[0]][cord[1]] < 0 ? true : false;
+    }
+
     emptyCells(startingPoint, endingPoint){
-        
         // we should check that these two points exist in the board
         // we should check that they are empty, so the points between them.
         if(endingPoint[0] >= 10 || endingPoint[1] >= 10){
@@ -101,7 +105,7 @@ class GameBoard {
             }
         }
         else{
-            let colIdx = startingPoint[1];
+            const colIdx = startingPoint[1];
             for(let i = startingPoint[0]; i <= endingPoint[0]; i++) {
                 if(this.board[i][colIdx] != 0) return false;
             }

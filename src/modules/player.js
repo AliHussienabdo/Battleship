@@ -7,6 +7,7 @@ class Player{
         this.shipsDirHoriz = true;
         this.gameBoard = GameBoard();
     }
+
     addShip(cord){
         if(this.shipMaxLength == 0) return false;
         if(gameBoard.addShip(this.shipMaxLength, cord, this.shipsDirHoriz)){
@@ -15,14 +16,25 @@ class Player{
         }
         return false;
     }
+
     updateDirection(){
         this.shipDirHoriz = this.shipDirHoriz? false : true;
     }
+
     hit(cord){
         return this.gameBoard.receiveAttack(cord);
     }
+
     isLost(){
         return this.gameBoard.isAllShipsSunk();
+    }
+
+    AllShipsReady(){
+        return this.shipMaxLength > 0? true : false;
+    }
+
+    isConqured(cord){
+        return this.gameBoard.isOccupiedCell(cord);
     }
 
 }
