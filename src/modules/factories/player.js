@@ -3,22 +3,22 @@ import {GameBoard} from './gameBoard.js'
 class Player{
     constructor(name){
         this.name = name;
-        this.shipMaxLength = 5;
+        this.shipsNum = 5;
         this.shipsDirHoriz = true;
-        this.gameBoard = GameBoard();
+        this.gameBoard = new GameBoard();
     }
 
     addShip(cord){
-        if(this.shipMaxLength == 0) return false;
-        if(gameBoard.addShip(this.shipMaxLength, cord, this.shipsDirHoriz)){
-            this.shipMaxLength--;
+        if(this.shipsNum == 0) return false;
+        if(this.gameBoard.addShip(this.shipsNum, cord, this.shipsDirHoriz)){
+            this.shipsNum--;
             return true;
         }
         return false;
     }
 
-    updateDirection(){
-        this.shipDirHoriz = this.shipDirHoriz? false : true;
+    rotateShip(){
+        return this.shipsDirHoriz = !this.shipsDirHoriz;
     }
 
     hit(cord){
@@ -30,7 +30,7 @@ class Player{
     }
 
     allShipsReady(){
-        return this.shipMaxLength > 0;
+        return this.shipsNum == 0;
     }
 
     isConqured(cord){
@@ -41,5 +41,16 @@ class Player{
         return this.gameBoard.getBoard();
     }
 
+    placeShipsRandomaly(){
+        while(!this.allShipsReady()) {
+            this.addShip([Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)]); 
+            if(Math.random() < 0.5){ // change the direction randomly
+                this.rotateShip();
+            }
+        }
+    }
+
 }
 
+
+export { Player };

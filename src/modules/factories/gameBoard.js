@@ -21,9 +21,11 @@ class GameBoard {
 
         const [startingPoint, endingPoint] = this.getStartEndPoints(length, cord, isHorizontal);
         
-        if(!isPlacementPossible(startingPoint, endingPoint)) return false;
+        if(!this.isPlacementPossible(startingPoint, endingPoint, isHorizontal)){
+            return false;
+        }
 
-        const newShip = Ship(length);
+        const newShip = new Ship(length);
         this.ships.push(newShip);
         
         if(isHorizontal){
@@ -45,20 +47,22 @@ class GameBoard {
     /*determines whether or not the attack hit a ship and then sends the ‘hit’ function 
     to the correct ship, or records the coordinates of the missed shot.*/
     receiveAttack(cord){
+        let [rowIdx, colIdx] = cord;
         
-        if(this.board[cord[0]][cord[1]].isThereShip()) {
+        if(this.board[rowIdx][colIdx].hasShip()) {
             this.ships.forEach(ship => {
-                if(ship.length == this.board[cord[0]][cord[1]].getValue()){
+                if(ship.length == this.board[rowIdx][colIdx].getValue()){
                     ship.hit();
                 }
             })
-            this.board[cord[0]][cord[1]].hitCell();
-            return true;
+            // this.board[cord[0]][cord[1]].hitCell();
+            // return true;
         } 
-        else { // missed shoot
-            this.board[cord[0]][cord[1]].hitCell();
-            return false;
-        }
+        // else { // missed shoot
+        //     this.board[cord[0]][cord[1]].hitCell();
+        //     return false;
+        // }
+        return this.board[rowIdx][colIdx].hit();
 
     }
 
@@ -70,22 +74,22 @@ class GameBoard {
         return this.board[cord[0]][cord[1]].isHited();
     }
 
-    isPlacementPossible(startingPoint, endingPoint){
+    isPlacementPossible(startingPoint, endingPoint, isHorizontal){
         // we should check that these two points exist in the board
         // we should check that they are empty, so the points between them.
         if(endingPoint[0] >= this.SIZE || endingPoint[1] >= this.SIZE){
             return false;
         }
-        if(startingPoint[0] == endingPoint[0]){
+        if(isHorizontal){
             const rowIdx = startingPoint[0];
             for(let i = startingPoint[1]; i <= endingPoint[1]; i++) {
-                if(this.board[rowIdx][i].isThereShip()) return false; // isThereShip in cell
+                if(this.board[rowIdx][i].hasShip()) return false; // hasShip in cell
             }
         }
         else{
             const colIdx = startingPoint[1];
             for(let i = startingPoint[0]; i <= endingPoint[0]; i++) {
-                if(this.board[i][colIdx].isThereShip()) return false;
+                if(this.board[i][colIdx].hasShip()) return false;
             }
         }
         return true;

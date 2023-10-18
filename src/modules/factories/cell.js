@@ -4,10 +4,10 @@ class cell {
     this.hited = false;
   }
   addToken(val) {
-    shipNum = val;
+    this.shipNum = val;
   }
-  isThereShip() {
-    return shipNum > 0;
+  hasShip() {
+    return this.shipNum > 0;
   }
   getValue() {
     return this.shipNum;
@@ -18,13 +18,15 @@ class cell {
   }
 
   hit() {
-    if (shipNum == 0) {
-      this.shipNum = -1;
-    } else if (shipNum > 0) {
-      this.shipNum = -2;
-    }
     this.hited = true;
+    if (this.hasShip()) {
+      this.shipNum = -2;
+      return true;
+    }
+    this.shipNum = -1;
+    return false;
   }
+
 }
 
 export { cell };

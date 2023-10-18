@@ -1,19 +1,18 @@
-import { Player } from './player';
-
+import { Player } from './player.js';
 
 class Ai{
     constructor(){
         this.player = new Player('Ai');
         this.moves = [];
-        this.placeShips();
+        this.player.placeShipsRandomaly();
     }
 
     move () {
-        let cord = getRandomCoord();
-        while(this.moves.includes(cord)){
-            cord = getRandomCoord();
+        let cord = this.getRandomCoord();
+        while(this.moves.includes(cord.join(''))){
+            cord = this.getRandomCoord(); 
         }
-        this.moves.push(cord);
+        this.moves.push(cord.join(''));
         return cord;
     }
 
@@ -21,14 +20,12 @@ class Ai{
         return this.player.hit(cord);
     }
 
-    placeShips() {
-        while(!this.player.allShipsReady()) {
-            this.player.addShip(getRandomCoord());
-        }
-    }
-
     hasLost(){
         return this.player.hasLost();
+    }
+
+    getGameBoard(){
+        return this.player.getGameBoard();
     }
 
     getRandomCoord (){
