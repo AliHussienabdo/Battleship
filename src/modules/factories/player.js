@@ -25,16 +25,20 @@ class Player{
         return this.gameBoard.receiveAttack(cord);
     }
 
-    isLost(){
+    hasLost(){
         return this.gameBoard.isAllShipsSunk();
     }
 
-    AllShipsReady(){
-        return this.shipMaxLength > 0? true : false;
+    allShipsReady(){
+        return this.shipMaxLength > 0;
     }
 
     isConqured(cord){
         return this.gameBoard.isOccupiedCell(cord);
+    }
+
+    getGameBoard(){
+        return this.gameBoard.getBoard();
     }
 
 }

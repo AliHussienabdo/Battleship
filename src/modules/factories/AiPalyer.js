@@ -3,29 +3,32 @@ import { Player } from './player';
 
 class Ai{
     constructor(){
-        this.ai = new Player('Ai');
+        this.player = new Player('Ai');
+        this.moves = [];
+        this.placeShips();
     }
 
-    move (SecPlayer) {
+    move () {
         let cord = getRandomCoord();
-        while(SecPlayer.isConquered(cord)){
+        while(this.moves.includes(cord)){
             cord = getRandomCoord();
         }
+        this.moves.push(cord);
         return cord;
     }
 
     hit(cord){
-        return this.ai.hit(cord);
+        return this.player.hit(cord);
     }
 
     placeShips() {
-        while(!this.ai.AllShipsReady()) {
-            this.ai.addShip(getRandomCoord());
+        while(!this.player.allShipsReady()) {
+            this.player.addShip(getRandomCoord());
         }
     }
 
-    isLost(){
-        return this.ai.isLost();
+    hasLost(){
+        return this.player.hasLost();
     }
 
     getRandomCoord (){
