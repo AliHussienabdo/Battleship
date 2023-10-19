@@ -1,20 +1,17 @@
 import { GameController } from "../factories/gameController.js";
 
-function ScreenController (playerName){
+const ScreenController = (playerName) => {
 
     let game = new GameController(playerName);
     placeShips();
 
     function placeShips(){
         clearDom();
-        placingShipsDOM();
-    }
-    function placingShipsDOM(){
         game.placeShipsRandomaly();
         let board = game.getPlayerGameBoard();
-        renderPlacingShipsMOOD(board);
+        rederShips(board);
     }
-    function renderPlacingShipsMOOD(board){
+    function rederShips(board){
         const content = document.querySelector('.content');
         content.innerHTML = 
         `<h1>place your ships</h1>
@@ -64,32 +61,50 @@ function ScreenController (playerName){
         }
 
         const cells = document.querySelectorAll('.ai-cell');
-        cells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                let cord = [cell.dataset.playerx, cell.dataset.playery];
-                let info = game.playRound(cord);
-
-                if(info.isPlayerHit){
-                    cell.classList.add('hit-ship');
-                }
-                else {
-                    cell.classList.add('not-hit');
-                }
-
-                let [x,y] = info.aiMove;
-                console.log(x,y)
-                const playerCell = document.querySelector(`[data-aix="${x}"][data-aiy="${y}"]`);
-                console.log(playerCell);
-
-                if(info.isAiHit){
-                    playerCell.classList.add('hit-ship');
-                }
-                else{
-                    playerCell.classList.add('not-hit');
-                }
-            })
-        })
+        cells.forEach(cell => cell.addEventListener('click', hittingHandler));
     }
+
+    function hittingHandler(e){
+        
+        let cord = [e.target.dataset.playerx, e.target.dataset.playery];
+        let info = game.playRound(cord);
+
+        if(info.isPlayerHit){
+            e.target.classList.add('hit-ship');
+        }
+        else {
+            e.target.classList.add('not-hit');
+        }
+
+        checkWinner();
+
+        let [x,y] = info.aiMove;
+        const playerCell = document.querySelector(`[data-aix="${x}"][data-aiy="${y}"]`);
+
+        if(info.isAiHit){
+            playerCell.classList.add('hit-ship');
+        }
+        else{
+            playerCell.classList.add('not-hit');
+        }
+        e.target.removeEventListener('click', hittingHandler);
+    }
+
+    function checkWinner(){
+        if(game.isGameOver()){
+            clearDom();
+            const content = document.querySelector('.content');
+            const winner = game.getWinner();
+            if(winner == 'player'){
+                content.innerHTML = 'You are the Winner';
+            }
+            else {
+                // ai wins the game
+                content.innerHTML = 'Ai is the winner';
+            }
+        }
+    }
+
     function clearDom(){
         const content = document.querySelector('.content');
         content.innerHTML = '';

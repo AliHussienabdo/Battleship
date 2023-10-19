@@ -40,9 +40,7 @@ class GameBoard {
                 this.board[i][colIdx].addToken(length);
             }
         }
-
         return true;
-
     }
     /*determines whether or not the attack hit a ship and then sends the ‘hit’ function 
     to the correct ship, or records the coordinates of the missed shot.*/
@@ -55,13 +53,7 @@ class GameBoard {
                     ship.hit();
                 }
             })
-            // this.board[cord[0]][cord[1]].hitCell();
-            // return true;
         } 
-        // else { // missed shoot
-        //     this.board[cord[0]][cord[1]].hitCell();
-        //     return false;
-        // }
         return this.board[rowIdx][colIdx].hit();
 
     }
@@ -104,7 +96,5 @@ class GameBoard {
     getBoard(){
         return this.board;
     }
-
 }
-
 export {GameBoard};

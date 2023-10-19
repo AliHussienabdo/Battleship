@@ -9,7 +9,7 @@ class GameController{
         this.ai = new Ai();
     }
     addPlayerShips(cord){
-        return this.players[0].addShip(cord);
+        return this.player.addShip(cord);
     }
     placeShipsRandomaly(){
         this.player.placeShipsRandomaly();
@@ -26,7 +26,20 @@ class GameController{
         return player.hit(cord);
     }
     isGameOver(){
-        return this.players[0].hasLost() || this.players[1].hasLost();
+        return this.player.hasLost() || this.ai.hasLost();
+    }
+
+    getWinner(){
+        if(this.isGameOver()){
+            if(this.ai.hasLost()){ 
+                return 'player';
+            }
+            else return 'ai';
+        }
+        return false;
+    }
+    gameInfo(){
+        if(this.player.hasLost());
     }
     getPlayerGameBoard(){
         return this.player.getGameBoard();

@@ -1,5 +1,4 @@
 import {GameBoard} from './gameBoard.js'
-
 class Player{
     constructor(name){
         this.name = name;
@@ -15,6 +14,10 @@ class Player{
             return true;
         }
         return false;
+    }
+
+    getName(){
+        return this.name;
     }
 
     rotateShip(){
@@ -49,8 +52,5 @@ class Player{
             }
         }
     }
-
 }
-
-
 export { Player };

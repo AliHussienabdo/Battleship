@@ -9,6 +9,7 @@ class Ai{
 
     move () {
         let cord = this.getRandomCoord();
+        // we bush the array as string because there is no comparison between two arrays in js
         while(this.moves.includes(cord.join(''))){
             cord = this.getRandomCoord(); 
         }
