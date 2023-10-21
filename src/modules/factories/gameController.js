@@ -8,8 +8,14 @@ class GameController{
         this.player = new Player(name);
         this.ai = new Ai();
     }
-    addPlayerShips(cord){
+    addShip(cord){
         return this.player.addShip(cord);
+    }
+    isGameReady(){
+        return this.player.allShipsReady();
+    }
+    rotatePlayerShip(){
+        this.player.rotateShip();
     }
     placeShipsRandomaly(){
         this.player.placeShipsRandomaly();
@@ -23,7 +29,9 @@ class GameController{
         };
     }
     dropToken(player, cord){
-        return player.hit(cord);
+        if(!this.isGameOver()){
+            return player.hit(cord);
+        }
     }
     isGameOver(){
         return this.player.hasLost() || this.ai.hasLost();
@@ -37,9 +45,6 @@ class GameController{
             else return 'ai';
         }
         return false;
-    }
-    gameInfo(){
-        if(this.player.hasLost());
     }
     getPlayerGameBoard(){
         return this.player.getGameBoard();
