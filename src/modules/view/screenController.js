@@ -8,11 +8,17 @@ const ScreenController = (playerName) => {
     clearDom();
     const content = document.querySelector(".content");
     content.innerHTML = `<h1>place your ships</h1>
-        <button id="rotate-ship-btn">Rotate Ship</button>
-        <div id="place-ships-grid" class="grid"></div>
+        <div id="place-ships">
+          <div id="place-ships-grid" class="grid"></div>
+          <div id="drag-ships">
+            <h1>Drag Your ships Captain ${playerName}</h1>
+            <div id="ship-5" class="ship" draggable="true"></div>
+          </div>
+        </div>
         <div class="buttons">
-        <button id="start-game-btn">Start</button>
-        <button id="random-btn">Random</button>
+        <button id="start-game-btn" class="btn">Start</button>
+        <button id="random-btn" class="btn">Random</button>
+        <button id="rotate-ship-btn" class="btn">Rotate</button>
         </div>`;
 
     const grid = document.querySelector("#place-ships-grid");
@@ -31,13 +37,17 @@ const ScreenController = (playerName) => {
     }
   }
 
-  function addShipPlacementEventListeners(grid){
+  function addShipPlacementEventListeners(){
     const cells = document.querySelectorAll(".cell");
+    const draggedShip = document.querySelector('#drag-ships');
+    let num = 5;
     cells.forEach((cell) => {
-      cell.addEventListener("click", () => {
+      cell.addEventListener('dragover', (e) => e.preventDefault());
+      cell.addEventListener("drop", () => {
         let cord = [Number(cell.dataset.x), Number(cell.dataset.y)];
         if(game.addShip(cord)){
           updateGrid(cell);
+          draggedShip.innerHTML = `<div id="ship-${--num}" class="ship" draggable="true"></div>`;
         }
       });
     });
@@ -50,13 +60,20 @@ const ScreenController = (playerName) => {
 
   function addRotateShipEventListener() {
     const rotateShipBtn = document.querySelector("#rotate-ship-btn");
-    rotateShipBtn.addEventListener("click", () => game.rotatePlayerShip());
+    
+    rotateShipBtn.addEventListener("click", () => {
+      game.rotatePlayerShip();
+      const ship = document.querySelector('.ship');
+      ship.classList.toggle('rotate-draggable-ship');
+    });
   }
 
   function addRandomPlacementEventListener() {
     const randomPlacement = document.querySelector("#random-btn");
+    const draggableShips = document.querySelector('#drag-ships');
     randomPlacement.addEventListener("click", () => {
       game.placeShipsRandomaly();
+      draggableShips.remove();
       updateGrid();
     });
   }
@@ -69,7 +86,7 @@ const ScreenController = (playerName) => {
         for (let j = 0; j < 10; j++) {
           if (board[i][j].hasShip()) {
             const cell = document.querySelector(`[data-x="${i}"][data-y="${j}"]`);
-            cell.classList.add('ship');
+            cell.classList.add('ship-here');
           }
         }
     }
@@ -84,9 +101,11 @@ const ScreenController = (playerName) => {
 
   function renderGameBoard() {
     const content = document.querySelector(".content");
-    content.innerHTML = `<div id="player-ships" class="grid"></div>
-        <div id="ai-ships" class="grid"></div>`;
-    content.classList.add('active');
+    content.innerHTML = `<h1>Battel ships</h1> 
+    <div id="game-board">
+      <div id="player-ships" class="grid"></div>
+      <div id="ai-ships" class="grid"></div>
+    </div> `;
 
     const aiGrid = document.querySelector("#ai-ships");
     const playerGrid = document.querySelector("#player-ships");
@@ -104,7 +123,7 @@ const ScreenController = (playerName) => {
         // show the ships of the player in his grid so he can 
           // see them while they were attacked by the Ai
         if (board[i][j].hasShip()) {
-          playerGrid.lastElementChild.classList.add("ship");
+          playerGrid.lastElementChild.classList.add("ship-here");
         }
       }
     }
