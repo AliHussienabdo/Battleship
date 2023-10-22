@@ -7,7 +7,7 @@
     "test": "jest",
     "build": "webpack",
     "watch": "webpack watch",
-    "deploy-demo": "git subtree push --prefix dist origin gh-pages"
+    "deploy-demo": "git subtree push --prefix public origin gh-pages"
   },
   "repository": {
     "type": "git",
