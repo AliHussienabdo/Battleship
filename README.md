@@ -5,7 +5,7 @@ through the process of developing this game i've learned the importance of testi
 the your functions and classes before building the UI.
 By testing you gain alot of confidence in the app components. 
 
-[Live preview](alyhusseinn.github.io/Battleship/)
+[Live preview](https://alyhusseinn.github.io/Battleship/)
 
 ## Built with
 - javascript
