@@ -189,7 +189,10 @@ const ScreenController = (playerName) => {
 
   function finishGame(winner){
     const winnerMsg = document.querySelector('#winner-msg');
+    const content = document.querySelector('.content');
     winnerMsg.textContent = (winner == 'ai')? 'Computer is the Winner' : 'You are the winner';
+
+    content.classList.add('blur-content');
 
     document.querySelector('#winner-msg-cart').classList.add('active');
     document.querySelectorAll('.ai-cell').forEach(cell => {
