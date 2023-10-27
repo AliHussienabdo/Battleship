@@ -190,7 +190,7 @@ input[type="text"]{
     top: 0;
     left: 18%;
     text-align: center;
-    transform: translateY(-300px);
+    transform: translateY(-500px);
     transition: all 0.3s linear;
 }
 
