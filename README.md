@@ -2,7 +2,7 @@
 
 the famous battleship game created in order to practice JavaScript testing.
 through the process of developing this game i've learned the importance of testing
-the your functions and classes before building the UI.
+ your functions and classes before building the UI.
 By testing you gain alot of confidence in the app components. 
 
 [Live preview](https://alyhusseinn.github.io/Battleship/)
@@ -17,7 +17,7 @@ By testing you gain alot of confidence in the app components.
 ## getting started
 
 ```
-git clone https://github.com/AliHussienabdo/Battleship.git
+git clone https://github.com/alyHusseinn/Battleship.git
 cd Battleship
 npm install
 npm start
